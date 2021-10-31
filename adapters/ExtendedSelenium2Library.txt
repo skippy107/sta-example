@@ -1,0 +1,3 @@
+﻿*** Settings ***
+Documentation     Loads the extended Selenium2Library.
+Library           ExtendedSelenium2Library

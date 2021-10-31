@@ -1,0 +1,15 @@
+*** Settings ***
+Documentation     Defines all required resources and keywords
+...               handling the google search.
+Resource          ../adapters/SeleniumLibrary.txt
+
+*** Variables ***
+${Google.Search.Locator.SearchField}    id=lst-ib
+${Google.Search.Locator.SearchResult.Rtomac}    xpath=//a[contains(.,'MarkusBernhardt')]
+
+*** Keywords ***
+Search String
+    [Arguments]    ${Search.String}
+    Input Text    ${Google.Search.Locator.SearchField}    ${Search.String}
+    Press Key    ${Google.Search.Locator.SearchField}    \\13
+    Wait Until Element Is Visible    ${Google.Search.Locator.SearchResult.Rtomac}

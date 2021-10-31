@@ -1,0 +1,17 @@
+*** Settings ***
+Documentation     A resource file with variables specific for the
+...               execution of the testsuites by SauceLabs
+
+*** Variables ***
+
+${Selenium.Grid}    true
+
+${Selenium.Host}    ondemand.saucelabs.com
+${Selenium.Port}    80
+
+
+${Selenium.Browser.Name}    chrome
+${Selenium.Browser.Version}    57
+${Selenium.Timeout}        40.0
+
+

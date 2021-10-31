@@ -1,0 +1,13 @@
+*** Settings ***
+Documentation     A resource file with variables specific for the local
+...               execution of test suites.
+
+*** Variables ***
+
+${Selenium.Grid}    false
+
+${Selenium.Browser.Name}    chrome
+${Selenium.Browser.Version}    57
+${Selenium.Timeout}        30.0
+
+
