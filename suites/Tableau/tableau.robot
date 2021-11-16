@@ -12,14 +12,14 @@ Tableau Ready
 
 Load Source Dashboard
 	[Arguments]	${eid}	${url}
-	Execute Javascript	if (!srcViz) {srcInitializeViz(${eid},${url}); srcListenToMarksSelection();}
+	Execute Javascript	if (!srcViz) {initializeSourceViz(${eid},${url}); srcListenToMarksSelection();}
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
 	Sleep    500ms
 	[Return]    ${tr}
 
 Load Target Dashboard
 	[Arguments]	${eid}	${url}
-	Execute Javascript	if (!trgViz) {trgInitializeViz(${eid},${url}); trgListenToMarksSelection();}
+	Execute Javascript	if (!trgViz) {initializeTargetViz(${eid},${url}); trgListenToMarksSelection();}
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
 	Sleep    500ms
 	[Return]    ${tr}
@@ -136,9 +136,9 @@ Set Target Filter on ${filter_name} to ${filter_values} on Sheet ${sheet_name}
             
 
 Set Source Marks on ${column_name} to ${mark_values} on Sheet ${sheet_name}	
-	Execute Javascript    srcSwitchToSheet(${sheet_name}); srcDbSheet.selectMarksAsync(${column_name}, ${mark_values}, "REPLACE");
+	Execute Javascript    srcSwitchToSheet(${sheet_name}); srcWbSheet.selectMarksAsync(${column_name}, ${mark_values}, "REPLACE");
 	Sleep    1s
 
 Set Target Marks on ${column_name} to ${mark_values} on Sheet ${sheet_name}	
-	Execute Javascript    trgSwitchToSheet(${sheet_name}); trgDbSheet.selectMarksAsync(${column_name}, ${mark_values}, "REPLACE");
+	Execute Javascript    trgSwitchToSheet(${sheet_name}); trgWbSheet.selectMarksAsync(${column_name}, ${mark_values}, "REPLACE");
 	Sleep    1s

@@ -30,21 +30,21 @@ ${DONUT_MARK_VALUES}    ["Original Glazed","Apple Pie"]   # use array notation f
 ${WORLD_URL}	https://public.tableau.com/views/WorldIndicators/GDPpercapita
 ${WORLD_SHEET}   GDP per capita
 ${WORLD_FILTER_COLUMN}    Region
-${WORLD_FILTER2_COLUMN}    YEAR(Date (year))
 ${WORLD_FILTER_VALUES}    Europe
-${WORLD_FILTER2_VALUES}    2008
+${WORLD_FILTER2_COLUMN}    YEAR(Date (year))
+${WORLD_FILTER2_VALUES}    ${2008}
 ${WORLD_MARK_COLUMN}   Country / Region 
 ${WORLD_MARK_VALUES}    Luxembourg
 ${WORLD_MARK_NAME}    AVG(F: GDP per capita (curr $))
 
 # smartphone test values
 ${SMART_URL}	https://public.tableau.com/views/SmartphoneCostBreakdown/Overview
-${SMART_SHEET}	Components
+${SMART_SHEET}	 iPhone Bar
 ${SMART_FILTER_COLUMN}    Component
-${SMART_MARK_COLUMN}    Component
-${SMART_FILTER}    Camera
-${SMART_MARK_NAME}    SUM(Value)
+${SMART_FILTER_VALUES}    Camera
+${SMART_MARK_COLUMN}    Device
 ${SMART_MARK_VALUES}    ["Galaxy S 4","Galaxy S 5"]   # use array notation for more than one
+${SMART_MARK_NAME}    ATTR(DisplayValue)
 
 *** Keywords ***			
 Donut Dashboard Test
@@ -71,13 +71,15 @@ Smartphone Costs Dashboard Test
 	Load Source Dashboard	'${SRC_VIZ_ID}'	'${SMART_URL}'
 	Load Target Dashboard	'${TRG_VIZ_ID}'	'${SMART_URL}'
 	Sleep	5
-	Set Source Filter on ${SMART_FILTER_COLUMN} to '${SMART_FILTER}' on Sheet '${SMART_SHEET}'	
+	Set Source Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
+	Set Source Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
 	Sleep	5
-	Set Source Marks on '${SMART_MARK_COLUMN} to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
+	Set Source Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
 	Sleep	5
-	Set Target Filter on ${SMART_FILTER_COLUMN} to '${SMART_FILTER}' on Sheet '${SMART_SHEET}'	
+	Set Target Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
+	Set Target Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
 	Sleep	5
-	Set Target Marks on '${SMART_MARK_COLUMN} to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
+	Set Target Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
 	Sleep	5
 	Capture Page Screenshot
 	${src_check} =	Sum Source Marks	'${SMART_MARK_NAME}'
@@ -92,13 +94,13 @@ World Indicators Dashboard Test
 	Sleep	5
 	Set Source Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
 	Sleep	3
-	Set Source Filter on '${WORLD_FILTER2_COLUMN}' to '${WORLD_FILTER2_VALUES}' on Sheet '${WORLD_SHEET}'
+	Set Source Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
 	Sleep	3		
 	Set Source Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
 	Sleep	3		
 	Set Target Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
 	Sleep	3
-	Set Target Filter on '${WORLD_FILTER2_COLUMN}' to '${WORLD_FILTER2_VALUES}' on Sheet '${WORLD_SHEET}'
+	Set Target Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
 	Sleep	3		
 	Set Target Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
 	Sleep	3		
@@ -115,14 +117,15 @@ Test Launch
 	Set Selenium Implicit Wait	10
 	Open Browser	${TEST_FIXTURE_URL}	 ${BROWSER}
 	Maximize Browser Window
+	Sleep  5s
 
 *** Test Cases ***
-First Test
-	Donut Dashboard Test
+#First Test
+#	Donut Dashboard Test
 
 #Second Test
 #	Smartphone Costs Dashboard Test
 
-#Third Test
-#	World Indicators Dashboard Test
+Third Test
+	World Indicators Dashboard Test
 
