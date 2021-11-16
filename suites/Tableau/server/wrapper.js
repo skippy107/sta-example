@@ -21,6 +21,7 @@ function initializeSourceViz(eid,url) {
     onFirstInteractive: function () {
       srcWorkbook = srcViz.getWorkbook();
       srcDbSheet = srcWorkbook.getActiveSheet();
+      srcVizResize();
       tbusy = false;
     }
   };
@@ -40,12 +41,22 @@ function initializeTargetViz(eid,url) {
     onFirstInteractive: function () {
       trgWorkbook = trgViz.getWorkbook();
       trgDbSheet = trgWorkbook.getActiveSheet();
+      trgVizResize();
       tbusy = false;
     }
   };
   trgViz = new tableau.Viz(placeholderDiv, url, options);
 }
 
+function srcVizResize() {
+
+      srcViz.setFrameSize(500, 400);
+}
+function trgVizResize() {
+
+      trgViz.setFrameSize(500, 400);
+
+}
 // Create the viz after the page is done loading
 // $(initializeViz);
 
@@ -61,112 +72,148 @@ function initializeTargetViz(eid,url) {
 //                   { max: maxvalue }
 //
 
+function AsyncFinished() {
+  tbusy = false;
+}
+
 // source filter functions
+function srcSetParameter(parameter, value){
+    tbusy = true;
+    srcWorkbook.changeParameterValueAsync(
+      parameter,
+      value).then(function(){AsyncFinished();});
+}
+
 function srcFilterValue(filter,value) {
+  tbusy = true;
   srcWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.REPLACE);
+    tableau.FilterUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function srcAddValueToFilter(filter,value) {
+  tbusy = true;
   srcWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.ADD);
+    tableau.FilterUpdateType.ADD).then(function(){AsyncFinished();});
 }
 
 function srcRemoveValueFromFilter(filter,value) {
+  tbusy = true;
   srcWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.REMOVE);
+    tableau.FilterUpdateType.REMOVE).then(function(){AsyncFinished();});
 }
 
 function srcFilterRangeOfValues(filter, frange ) {
+  tbusy = true;
   srcWbSheet.applyRangeFilterAsync(
     filter,
     frange,
-    tableau.FilterUpdateType.REPLACE);
+    tableau.FilterUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function srcClearFilter(filter) {
-  srcWbSheet.clearFilterAsync(filter);
+  tbusy = true;
+  srcWbSheet.clearFilterAsync(filter).then(function(){AsyncFinished();});
 }
 
 // target filter functions
+function trgSetParameter(parameter, value){
+  tbusy = true;
+  trgWorkbook.changeParameterValueAsync(
+    parameter,
+    value).then(function(){AsyncFinished();});
+}
+
 function trgFilterValue(filter,value) {
+  tbusy = true;
   trgWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.REPLACE);
+    tableau.FilterUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function trgAddValueToFilter(filter,value) {
+  tbusy = true;
   trgWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.ADD);
+    tableau.FilterUpdateType.ADD).then(function(){AsyncFinished();});
 }
 
 function trgRemoveValueFromFilter(filter,value) {
+  tbusy = true;
   trgWbSheet.applyFilterAsync(
     filter,
     value,
-    tableau.FilterUpdateType.REMOVE);
+    tableau.FilterUpdateType.REMOVE).then(function(){AsyncFinished();});
 }
 
 function trgFilterRangeOfValues(filter, frange ) {
+  tbusy = true;
   trgWbSheet.applyRangeFilterAsync(
     filter,
     frange,
-    tableau.FilterUpdateType.REPLACE);
+    tableau.FilterUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function trgClearFilter(filter) {
-  trgWbSheet.clearFilterAsync(filter);
+  tbusy = true;
+  trgWbSheet.clearFilterAsync(filter).then(function(){AsyncFinished();});
 }
 ////////////////////////////////////////////////////////////////////////////////
 // 3 - Switch Tabs
 
 // source switch to sheet function
 function srcSwitchToSheet(sheet) {
-  srcWorkbook.activateSheetAsync(sheet);
-  srcDbSheet = srcWorkbook.getActiveSheet();
-  if (srcDbSheet.getWorksheets) {
-    srcWbSheet = srcDbSheet.getWorksheets().get(sheet);
-  } else {
-    srcWbSheet = srcDbSheet;
-  }
-  srcWbSheetName = sheet;
+  tbusy = true;
+  srcWorkbook.activateSheetAsync(sheet).then(function(){
+    srcDbSheet = srcWorkbook.getActiveSheet();
+    if (srcDbSheet.getWorksheets) {
+      srcWbSheet = srcDbSheet.getWorksheets().get(sheet);
+    } else {
+      srcWbSheet = srcDbSheet;
+    }
+    srcWbSheetName = sheet;
+    AsyncFinished();
+  });
 }
 // target switch to sheet function
 function trgSwitchToSheet(sheet) {
-  trgWorkbook.activateSheetAsync(sheet);
-  trgDbSheet = trgWorkbook.getActiveSheet();
-  if (trgDbSheet.getWorksheets) {
-    trgWbSheet = trgDbSheet.getWorksheets().get(sheet);
-  } else {
-    trgWbSheet = trgDbSheet;
-  }
-  trgWbSheetName = sheet;
+  tbusy = true;
+  trgWorkbook.activateSheetAsync(sheet).then(function(){
+    trgDbSheet = trgWorkbook.getActiveSheet();
+    if (trgDbSheet.getWorksheets) {
+      trgWbSheet = trgDbSheet.getWorksheets().get(sheet);
+    } else {
+      trgWbSheet = trgDbSheet;
+    }
+    trgWbSheetName = sheet;
+    AsyncFinished();
+  });
 }
 ////////////////////////////////////////////////////////////////////////////////
 // 4 - Select
 
 // source select functions
 function srcSelectValue(filter,value) {
+  tbusy = true;
   srcWbSheet.selectMarksAsync(
     filter,
     value,
-    tableau.SelectionUpdateType.REPLACE);
+    tableau.SelectionUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function srcAddValueToSelection(filter,value) {
+  tbusy = true;
   srcWbSheet().selectMarksAsync(
     filter,
     value,
-    tableau.SelectionUpdateType.ADD);
+    tableau.SelectionUpdateType.ADD).then(function(){AsyncFinished();});
 }
 
 function srcRemoveFromSelection(filter,frange) {
@@ -174,30 +221,34 @@ function srcRemoveFromSelection(filter,frange) {
   // filter = "AVG(F: GDP per capita (curr $))"
   // frange = { max: 5000 }
   //workbook.getActiveSheet().selectMarksAsync(
+  tbusy = true;
   srcWbSheet().selectMarksAsync(
     filter,
     frange,
-    tableau.SelectionUpdateType.REMOVE);
+    tableau.SelectionUpdateType.REMOVE).then(function(){AsyncFinished();});
 }
 
 function srcClearSelection() {
+  tbusy = true;
   // workbook.getActiveSheet().clearSelectedMarksAsync();
-  srcWbSheet().clearSelectedMarksAsync();
+  srcWbSheet().clearSelectedMarksAsync().then(function(){AsyncFinished();});
 }
 
 // target select functions
 function trgSelectValue(filter,value) {
+  tbusy = true;
   trgWbSheet.selectMarksAsync(
     filter,
     value,
-    tableau.SelectionUpdateType.REPLACE);
+    tableau.SelectionUpdateType.REPLACE).then(function(){AsyncFinished();});
 }
 
 function trgAddValueToSelection(filter,value) {
+  tbusy = true;
   trgWbSheet().selectMarksAsync(
     filter,
     value,
-    tableau.SelectionUpdateType.ADD);
+    tableau.SelectionUpdateType.ADD).then(function(){AsyncFinished();});
 }
 
 function trgRemoveFromSelection(filter,frange) {
@@ -205,15 +256,17 @@ function trgRemoveFromSelection(filter,frange) {
   // filter = "AVG(F: GDP per capita (curr $))"
   // frange = { max: 5000 }
   //workbook.getActiveSheet().selectMarksAsync(
+  tbusy = true;
   trgWbSheet().selectMarksAsync(
     filter,
     frange,
-    tableau.SelectionUpdateType.REMOVE);
+    tableau.SelectionUpdateType.REMOVE).then(function(){AsyncFinished();});
 }
 
 function trgClearSelection() {
   // workbook.getActiveSheet().clearSelectedMarksAsync();
-  trgWbSheet().clearSelectedMarksAsync();
+  tbusy = true;
+  trgWbSheet().clearSelectedMarksAsync().then(function(){AsyncFinished();});
 }
 
 ////////////////////////////////////////////////////////////////////////////////

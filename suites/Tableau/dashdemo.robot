@@ -20,10 +20,11 @@ ${TRG_VIZ_ID}	trgTableauViz
 
 # donut test values
 ${DONUT_URL}    https://public.tableau.com/views/DonutDashboard/DonutDashboard
-${DONUT_SHEET}    Measure Per Donut
-${DONUT_COLUMN}    Donut
-${DONUT_PRIMARY}    Energy
-${DONUT_MARK_NAME}    SUM(Energy, Fat, Protein, Fibre or Carbs)
+${DONUT_SHEET}   Measure Per Donut
+${DONUT_PRIMARY}   Primary Nutrient
+${DONUT_PRIMARY_VALUE}   Energy
+${DONUT_MARK_COLUMN}    Donut
+${DONUT_MARK_NAME}    SUM(Energy, Protein, Fat, Fibre or Carbs)
 ${DONUT_MARK_VALUES}    ["Original Glazed","Apple Pie"]   # use array notation for more than one
 
 # gdp test values
@@ -50,64 +51,69 @@ ${SMART_MARK_NAME}    ATTR(DisplayValue)
 Donut Dashboard Test
 	Load Source Dashboard    '${SRC_VIZ_ID}'    '${DONUT_URL}'
 	Load Target Dashboard    '${TRG_VIZ_ID}'    '${DONUT_URL}'
-	Sleep    7s
-	Set Source Parameter 'Primary Nutrient' to '${DONUT_PRIMARY}'  # there is only one parameter
-	Set Target Parameter 'Primary Nutrient' to '${DONUT_PRIMARY}'  # there is only one parameter
-	Sleep    3s
-	Set Source Marks on '${DONUT_COLUMN}' to ${DONUT_MARK_VALUES} on Sheet '${DONUT_SHEET}'
-	Sleep    3s
-	Set Target Marks on '${DONUT_COLUMN}' to ${DONUT_MARK_VALUES} on Sheet '${DONUT_SHEET}'
-	Sleep    3s
+
+    Set Source Parameter '${DONUT_PRIMARY}' to '${DONUT_PRIMARY_VALUE}'
+    Switch To Source Sheet    '${DONUT_SHEET}'
+	Select Source Marks  '${DONUT_MARK_COLUMN}'  ${DONUT_MARK_VALUES} 
+
+    Set Target Parameter '${DONUT_PRIMARY}' to '${DONUT_PRIMARY_VALUE}'
+    Switch To Target Sheet    '${DONUT_SHEET}'
+	Select Target Marks  '${DONUT_MARK_COLUMN}'  ${DONUT_MARK_VALUES} 
+
 	Capture Page Screenshot
-	${src_check} =	Sum Source Marks	'${DONUT_MARK_NAME}'
-	${src_result} =    Evaluate    ${src_check}/2    # Dashboard will also trigger marks, so must div/2
-	${trg_check} =	Sum Target Marks	'${DONUT_MARK_NAME}'
-	${trg_result} =    Evaluate    ${trg_check}/2    # Dashboard will also trigger marks, so must div/2
+
+	${src_result} =	Sum Source Marks	'${DONUT_MARK_NAME}'
+
+	${trg_result} =	Sum Target Marks	'${DONUT_MARK_NAME}'
+
 	Should Be Equal As Numbers	${src_result}    ${trg_result}
+
 	Unload Source Dashboard
 	Unload Target Dashboard
 
 Smartphone Costs Dashboard Test
 	Load Source Dashboard	'${SRC_VIZ_ID}'	'${SMART_URL}'
 	Load Target Dashboard	'${TRG_VIZ_ID}'	'${SMART_URL}'
-	Sleep	5
+
 	Set Source Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
 	Set Source Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
-	Sleep	5
 	Set Source Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
-	Sleep	5
+
 	Set Target Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
 	Set Target Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
-	Sleep	5
 	Set Target Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
-	Sleep	5
+
 	Capture Page Screenshot
+
 	${src_check} =	Sum Source Marks	'${SMART_MARK_NAME}'
+
 	${trg_check} =	Sum Target Marks	'${SMART_MARK_NAME}'
+
 	Should Be Equal As Numbers	${src_check}	${trg_check}
+
 	Unload Source Dashboard
 	Unload Target Dashboard
 								
 World Indicators Dashboard Test
 	Load Source Dashboard	'${SRC_VIZ_ID}'	'${WORLD_URL}'
 	Load Target Dashboard	'${TRG_VIZ_ID}'	'${WORLD_URL}'
-	Sleep	5
+
 	Set Source Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
-	Sleep	3
 	Set Source Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
-	Sleep	3		
 	Set Source Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
-	Sleep	3		
+
 	Set Target Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
-	Sleep	3
 	Set Target Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
-	Sleep	3		
 	Set Target Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
-	Sleep	3		
+
 	Capture Page Screenshot
+
 	${src_check} =	Sum Source Marks	'${WORLD_MARK_NAME}'
+
 	${trg_check} =	Sum Target Marks	'${WORLD_MARK_NAME}'
+
 	Should Be Equal As Numbers	${src_check}	${trg_check}
+
 	Unload Source Dashboard
 	Unload Target Dashboard
 
@@ -117,14 +123,13 @@ Test Launch
 	Set Selenium Implicit Wait	10
 	Open Browser	${TEST_FIXTURE_URL}	 ${BROWSER}
 	Maximize Browser Window
-	Sleep  5s
 
 *** Test Cases ***
-#First Test
-#	Donut Dashboard Test
+First Test
+	Donut Dashboard Test
 
-#Second Test
-#	Smartphone Costs Dashboard Test
+Second Test
+	Smartphone Costs Dashboard Test
 
 Third Test
 	World Indicators Dashboard Test
