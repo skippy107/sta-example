@@ -1,0 +1,10 @@
+#trgTableauViz, #srcTableauViz {
+    display:block; 
+    /*width: 400px;*/
+    height: 400px;
+}
+
+#srcDialog, #trgDialog {
+    /*width: 400px;*/
+    height:400px;
+}
