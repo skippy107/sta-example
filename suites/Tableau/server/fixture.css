@@ -7,7 +7,10 @@
 #srcDialog, #trgDialog {
     /*width: 400px;*/
     height:150px;
-    font-size: small;
+    font-size: x-small;
+}
+h2 {
+    font-size: smaller;
 }
 
 #srcButtons, #trgButtons {
