@@ -25,7 +25,7 @@ ${DONUT_PRIMARY}   Primary Nutrient
 ${DONUT_PRIMARY_VALUE}   Energy
 ${DONUT_MARK_COLUMN}    Donut
 ${DONUT_MARK_NAME}    SUM(Energy, Protein, Fat, Fibre or Carbs)
-${DONUT_MARK_VALUES}    ["Original Glazed","Apple Pie"]   # use array notation for more than one
+${DONUT_MARK_VALUES}    ["Original Glazed","Apple Pie"]   
 
 # gdp test values
 ${WORLD_URL}	https://public.tableau.com/views/WorldIndicators/GDPpercapita
@@ -33,7 +33,7 @@ ${WORLD_SHEET}   GDP per capita
 ${WORLD_FILTER_COLUMN}    Region
 ${WORLD_FILTER_VALUES}    Europe
 ${WORLD_FILTER2_COLUMN}    YEAR(Date (year))
-${WORLD_FILTER2_VALUES}    ${2008}
+${WORLD_FILTER2_VALUES}    ${2008}  # needs this notation to be interpreted as a number
 ${WORLD_MARK_COLUMN}   Country / Region 
 ${WORLD_MARK_VALUES}    Luxembourg
 ${WORLD_MARK_NAME}    AVG(F: GDP per capita (curr $))
@@ -41,30 +41,32 @@ ${WORLD_MARK_NAME}    AVG(F: GDP per capita (curr $))
 # smartphone test values
 ${SMART_URL}	https://public.tableau.com/views/SmartphoneCostBreakdown/Overview
 ${SMART_SHEET}	 iPhone Bar
+${SMART_PRIMARY}   Datatype
+${SMART_PRIMARY_VALUE}   Cost ($)
 ${SMART_FILTER_COLUMN}    Component
 ${SMART_FILTER_VALUES}    Camera
 ${SMART_MARK_COLUMN}    Device
-${SMART_MARK_VALUES}    ["Galaxy S 4","Galaxy S 5"]   # use array notation for more than one
+${SMART_MARK_VALUES}    ["Galaxy S 4","Galaxy S 5"]   
 ${SMART_MARK_NAME}    ATTR(DisplayValue)
 
 *** Keywords ***			
 Donut Dashboard Test
-	Load Source Dashboard    '${SRC_VIZ_ID}'    '${DONUT_URL}'
-	Load Target Dashboard    '${TRG_VIZ_ID}'    '${DONUT_URL}'
+	Load Source Dashboard    ${SRC_VIZ_ID}    ${DONUT_URL}
+	Load Target Dashboard    ${TRG_VIZ_ID}    ${DONUT_URL}
 
-    Set Source Parameter '${DONUT_PRIMARY}' to '${DONUT_PRIMARY_VALUE}'
-    Switch To Source Sheet    '${DONUT_SHEET}'
-	Select Source Marks  '${DONUT_MARK_COLUMN}'  ${DONUT_MARK_VALUES} 
+    Set Source Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE}
+	Switch To Source Sheet    ${DONUT_SHEET}
+	Select Source Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
 
-    Set Target Parameter '${DONUT_PRIMARY}' to '${DONUT_PRIMARY_VALUE}'
-    Switch To Target Sheet    '${DONUT_SHEET}'
-	Select Target Marks  '${DONUT_MARK_COLUMN}'  ${DONUT_MARK_VALUES} 
+    Set Target Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE}
+	Switch To Target Sheet    ${DONUT_SHEET}
+	Select Target Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
 
 	Capture Page Screenshot
 
-	${src_result} =	Sum Source Marks	'${DONUT_MARK_NAME}'
+	${src_result} =	Sum Source Marks	${DONUT_MARK_NAME}
 
-	${trg_result} =	Sum Target Marks	'${DONUT_MARK_NAME}'
+	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
 
 	Should Be Equal As Numbers	${src_result}    ${trg_result}
 
@@ -72,22 +74,24 @@ Donut Dashboard Test
 	Unload Target Dashboard
 
 Smartphone Costs Dashboard Test
-	Load Source Dashboard	'${SRC_VIZ_ID}'	'${SMART_URL}'
-	Load Target Dashboard	'${TRG_VIZ_ID}'	'${SMART_URL}'
+	Load Source Dashboard	${SRC_VIZ_ID}	${SMART_URL}
+	Load Target Dashboard	${TRG_VIZ_ID}	${SMART_URL}
 
-	Set Source Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
-	Set Source Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
-	Set Source Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
+	Set Source Parameter ${SMART_PRIMARY} to ${SMART_PRIMARY_VALUE}  # there is only one parameter
+	Switch To Source Sheet    ${SMART_SHEET}
+	Set Source Filter    ${SMART_FILTER_COLUMN}    ${SMART_FILTER_VALUES}
+	Select Source Marks    ${SMART_MARK_COLUMN}    ${SMART_MARK_VALUES}
 
-	Set Target Filter on '${SMART_FILTER_COLUMN}' to '${SMART_FILTER_VALUES}' on Sheet '${SMART_SHEET}'	
-	Set Target Parameter 'Datatype' to 'Cost ($)'  # there is only one parameter
-	Set Target Marks on '${SMART_MARK_COLUMN}' to ${SMART_MARK_VALUES} on Sheet '${SMART_SHEET}'
+	Set Target Parameter ${SMART_PRIMARY} to ${SMART_PRIMARY_VALUE}  # there is only one parameter
+	Switch To Target Sheet    ${SMART_SHEET}
+	Set Target Filter    ${SMART_FILTER_COLUMN}    ${SMART_FILTER_VALUES}
+	Select Target Marks    ${SMART_MARK_COLUMN}    ${SMART_MARK_VALUES}
 
 	Capture Page Screenshot
 
-	${src_check} =	Sum Source Marks	'${SMART_MARK_NAME}'
+	${src_check} =	Sum Source Marks	${SMART_MARK_NAME}
 
-	${trg_check} =	Sum Target Marks	'${SMART_MARK_NAME}'
+	${trg_check} =	Sum Target Marks	${SMART_MARK_NAME}
 
 	Should Be Equal As Numbers	${src_check}	${trg_check}
 
@@ -95,22 +99,26 @@ Smartphone Costs Dashboard Test
 	Unload Target Dashboard
 								
 World Indicators Dashboard Test
-	Load Source Dashboard	'${SRC_VIZ_ID}'	'${WORLD_URL}'
-	Load Target Dashboard	'${TRG_VIZ_ID}'	'${WORLD_URL}'
+	Load Source Dashboard	${SRC_VIZ_ID}	${WORLD_URL}
+	Load Target Dashboard	${TRG_VIZ_ID}	${WORLD_URL}
 
-	Set Source Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
-	Set Source Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
-	Set Source Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
+	Switch To Source Sheet    ${WORLD_SHEET}
+	Set Source Filter    ${WORLD_FILTER_COLUMN}    ${WORLD_FILTER_VALUES}
+	Sleep    1s
+	Set Source Filter    ${WORLD_FILTER2_COLUMN}      ${WORLD_FILTER2_VALUES}
+	Select Source Marks    ${WORLD_MARK_COLUMN}    ${WORLD_MARK_VALUES}
 
-	Set Target Filter on '${WORLD_FILTER_COLUMN}' to '${WORLD_FILTER_VALUES}' on Sheet '${WORLD_SHEET}'
-	Set Target Filter on '${WORLD_FILTER2_COLUMN}' to ${WORLD_FILTER2_VALUES} on Sheet '${WORLD_SHEET}'
-	Set Target Marks on '${WORLD_MARK_COLUMN}' to '${WORLD_MARK_VALUES}' on Sheet '${WORLD_SHEET}'
+	Switch To Target Sheet    ${WORLD_SHEET}
+	Set Target Filter    ${WORLD_FILTER_COLUMN}    ${WORLD_FILTER_VALUES}
+	Sleep    1s
+	Set Target Filter    ${WORLD_FILTER2_COLUMN}      ${WORLD_FILTER2_VALUES}
+	Select Target Marks   ${WORLD_MARK_COLUMN}     ${WORLD_MARK_VALUES}
 
 	Capture Page Screenshot
 
-	${src_check} =	Sum Source Marks	'${WORLD_MARK_NAME}'
+	${src_check} =	Sum Source Marks	${WORLD_MARK_NAME}
 
-	${trg_check} =	Sum Target Marks	'${WORLD_MARK_NAME}'
+	${trg_check} =	Sum Target Marks	${WORLD_MARK_NAME}
 
 	Should Be Equal As Numbers	${src_check}	${trg_check}
 

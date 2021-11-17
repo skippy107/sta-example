@@ -182,6 +182,37 @@ function srcSwitchToSheet(sheet) {
     AsyncFinished();
   });
 }
+function srcSwitchAndFilter(sheet,filter,value){
+  tbusy = true;
+  srcWorkbook.activateSheetAsync(sheet).then(function(){
+    srcDbSheet = srcWorkbook.getActiveSheet();
+    if (srcDbSheet.getWorksheets) {
+      srcWbSheet = srcDbSheet.getWorksheets().get(sheet);
+    } else {
+      srcWbSheet = srcDbSheet;
+    }
+    srcWbSheetName = sheet;
+  }).then(srcWbSheet.applyFilterAsync(
+    filter,
+    value,
+    tableau.FilterUpdateType.REPLACE)).then(function(){AsyncFinished();});
+}
+function srcSwitchAndSelect(sheet,filter,value){
+  tbusy = true;
+  srcWorkbook.activateSheetAsync(sheet).then(function(){
+    srcDbSheet = srcWorkbook.getActiveSheet();
+    if (srcDbSheet.getWorksheets) {
+      srcWbSheet = srcDbSheet.getWorksheets().get(sheet);
+    } else {
+      srcWbSheet = srcDbSheet;
+    }
+    srcWbSheetName = sheet;
+  }).then(srcWbSheet.selectMarksAsync(
+    filter,
+    value,
+    tableau.SelectionUpdateType.REPLACE)
+  ).then(function(){AsyncFinished();});
+}
 // target switch to sheet function
 function trgSwitchToSheet(sheet) {
   tbusy = true;
@@ -195,6 +226,38 @@ function trgSwitchToSheet(sheet) {
     trgWbSheetName = sheet;
     AsyncFinished();
   });
+}
+
+function trgSwitchAndSelect(sheet,filter,value){
+  tbusy = true;
+  trgWorkbook.activateSheetAsync(sheet).then(function(){
+    trgDbSheet = trgWorkbook.getActiveSheet();
+    if (trgDbSheet.getWorksheets) {
+      trgWbSheet = trgDbSheet.getWorksheets().get(sheet);
+    } else {
+      trgWbSheet = trgDbSheet;
+    }
+    trgWbSheetName = sheet;
+  }).then(trgWbSheet.selectMarksAsync(
+    filter,
+    value,
+    tableau.SelectionUpdateType.REPLACE)
+  ).then(function(){AsyncFinished();});
+}
+function trgSwitchAndFilter(sheet,filter,value){
+  tbusy = true;
+  trgWorkbook.activateSheetAsync(sheet).then(function(){
+    trgDbSheet = trgWorkbook.getActiveSheet();
+    if (trgDbSheet.getWorksheets) {
+      trgWbSheet = trgDbSheet.getWorksheets().get(sheet);
+    } else {
+      trgWbSheet = trgDbSheet;
+    }
+    trgWbSheetName = sheet;
+  }).then(trgWbSheet.applyFilterAsync(
+    filter,
+    value,
+    tableau.FilterUpdateType.REPLACE)).then(function(){AsyncFinished();});
 }
 ////////////////////////////////////////////////////////////////////////////////
 // 4 - Select
