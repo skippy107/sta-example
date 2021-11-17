@@ -11,6 +11,7 @@ Resource	tableau.robot    # this library maps keywords to the Tableau JavaScript
 
 Suite Setup	Test Launch
 Suite Teardown	Close Browser
+Test Teardown    Unload Dashboards
 
 *** Variables ***				
 ${TEST_FIXTURE_URL}	http://localhost:8080/userContent/tableau/fixture.html
@@ -70,9 +71,6 @@ Donut Dashboard Test
 
 	Should Be Equal As Numbers	${src_result}    ${trg_result}
 
-	Unload Source Dashboard
-	Unload Target Dashboard
-
 Smartphone Costs Dashboard Test
 	Load Source Dashboard	${SRC_VIZ_ID}	${SMART_URL}
 	Load Target Dashboard	${TRG_VIZ_ID}	${SMART_URL}
@@ -95,9 +93,6 @@ Smartphone Costs Dashboard Test
 
 	Should Be Equal As Numbers	${src_check}	${trg_check}
 
-	Unload Source Dashboard
-	Unload Target Dashboard
-								
 World Indicators Dashboard Test
 	Load Source Dashboard	${SRC_VIZ_ID}	${WORLD_URL}
 	Load Target Dashboard	${TRG_VIZ_ID}	${WORLD_URL}
@@ -122,15 +117,15 @@ World Indicators Dashboard Test
 
 	Should Be Equal As Numbers	${src_check}	${trg_check}
 
-	Unload Source Dashboard
-	Unload Target Dashboard
-
-
 Test Launch				
 	Set Selenium Timeout	10	
 	Set Selenium Implicit Wait	10
 	Open Browser	${TEST_FIXTURE_URL}	 ${BROWSER}
 	Maximize Browser Window
+
+Unload Dashboards
+	Unload Source Dashboard
+	Unload Target Dashboard
 
 *** Test Cases ***
 First Test

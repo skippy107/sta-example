@@ -31,7 +31,7 @@ Load Source Dashboard
 		...                srcListenToMarksSelection();
 		...             }
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Load Target Dashboard
@@ -43,7 +43,7 @@ Load Target Dashboard
 		...                trgListenToMarksSelection();
 		...             }
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Unload Source Dashboard
@@ -61,7 +61,7 @@ Switch To Source Sheet
 	${sheet} =    Check Parameter    ${sheet}     
 	Execute Javascript	srcSwitchToSheet(${sheet});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Switch To Target Sheet
@@ -69,7 +69,7 @@ Switch To Target Sheet
 	${sheet} =    Check Parameter    ${sheet}     
 	Execute Javascript	trgSwitchToSheet(${sheet});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Set Source Filter
@@ -78,7 +78,7 @@ Set Source Filter
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	srcFilterValue(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Set Target Filter
@@ -87,7 +87,7 @@ Set Target Filter
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgFilterValue(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Add To Source Filter	
@@ -96,7 +96,7 @@ Add To Source Filter
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	srcAddValueToFilter(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Add To Target Filter	
@@ -105,7 +105,7 @@ Add To Target Filter
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgAddValueToFilter(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Filter Source Range				
@@ -114,7 +114,7 @@ Filter Source Range
 	${range} =    Check Parameter    ${range}     
 	Execute Javascript	srcFilterRangeOfValues(${filter},${range});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Filter Target Range				
@@ -123,7 +123,7 @@ Filter Target Range
 	${range} =    Check Parameter    ${range}     
 	Execute Javascript	trgFilterRangeOfValues(${filter},${range});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Remove From Source Filter				
@@ -138,7 +138,7 @@ Remove From Target Filter
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgRemoveValueFromFilter(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Clear Source Filter				
@@ -146,7 +146,7 @@ Clear Source Filter
 	${filter} =    Check Parameter    ${filter}     
 	Execute Javascript	srcClearFilter(${filter});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Clear Target Filter				
@@ -154,7 +154,7 @@ Clear Target Filter
 	${filter} =    Check Parameter    ${filter}     
 	Execute Javascript	trgClearFilter(${filter});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Select Source Marks				
@@ -163,7 +163,7 @@ Select Source Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	srcSelectValue(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Add Source Marks				
@@ -172,7 +172,7 @@ Add Source Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	srcAddValueToSelection(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Remove Source Marks				
@@ -181,13 +181,13 @@ Remove Source Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	srcRemoveFromSelection(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Clear Source Marks				
 	Execute Javascript	srcClearSelection();
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Select Target Marks				
@@ -196,7 +196,7 @@ Select Target Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgSelectValue(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Add Target Marks				
@@ -205,7 +205,7 @@ Add Target Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgAddValueToSelection(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Remove Target Marks				
@@ -214,13 +214,13 @@ Remove Target Marks
 	${value} =    Check Parameter    ${value}     
 	Execute Javascript	trgRemoveFromSelection(${filter},${value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Clear Target Marks				
 	Execute Javascript	trgClearSelection();
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Sum Source Marks				
@@ -240,7 +240,7 @@ Set Source Parameter ${parameter_name} to ${parameter_value}
 	${parameter_value} =    Check Parameter    ${parameter_value}     
 	Execute Javascript   srcSetParameter(${parameter_name},${parameter_value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Set Target Parameter ${parameter_name} to ${parameter_value}
@@ -248,7 +248,7 @@ Set Target Parameter ${parameter_name} to ${parameter_value}
 	${parameter_value} =    Check Parameter    ${parameter_value}     
 	Execute Javascript   trgSetParameter(${parameter_name},${parameter_value});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Set Source Filter on ${filter_name} to ${filter_values} on Sheet ${sheet_name}	
@@ -257,7 +257,7 @@ Set Source Filter on ${filter_name} to ${filter_values} on Sheet ${sheet_name}
 	${sheet_name} =    Check Parameter    ${sheet_name}     
 	Execute Javascript  srcSwitchAndFilter(${sheet_name},${filter_name},${filter_values});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
             
 Set Target Filter on ${filter_name} to ${filter_values} on Sheet ${sheet_name}	
@@ -266,7 +266,7 @@ Set Target Filter on ${filter_name} to ${filter_values} on Sheet ${sheet_name}
 	${sheet_name} =    Check Parameter    ${sheet_name}     
 	Execute Javascript  trgSwitchAndFilter(${sheet_name},${filter_name},${filter_values});
 	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
-	Sleep    500ms
+	#Sleep    500ms
 	[Return]    ${tr}
 
 Select Source Marks on ${column_name} to ${mark_values} on Sheet ${sheet_name}	
