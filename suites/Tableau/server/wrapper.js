@@ -57,6 +57,17 @@ function trgVizResize() {
       trgViz.setFrameSize(500, 400);
 
 }
+
+function srcRevertAll() {
+  tbusy = true;
+  srcViz.revertAllAsync().then(function(){AsyncFinished();})
+}
+
+function trgRevertAll() {
+  tbusy = true;
+  trgViz.revertAllAsync().then(function(){AsyncFinished();})
+}
+
 // Create the viz after the page is done loading
 // $(initializeViz);
 

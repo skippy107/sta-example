@@ -22,6 +22,16 @@ Tableau Ready
     Should Not Be Equal    ${tr}    ${TRUE}
     [Return]    not ${tr}
 
+Source Revert All 
+    Execute Javascript	srcRevertAll();
+	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
+	[Return]    ${tr}
+
+Target Revert All 
+    Execute Javascript	trgRevertAll();
+	${tr} =    Wait Until Keyword Succeeds    7s    1s    Tableau Ready
+	[Return]    ${tr}
+
 Load Source Dashboard
 	[Arguments]	${eid}	${url}
 	${eid} =    Check Parameter    ${eid}     
