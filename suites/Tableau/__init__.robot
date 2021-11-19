@@ -7,8 +7,6 @@ Documentation	Suite Level Settings for Tableau tests
 Resource	resource/tableau.robot    # this library maps keywords to the Tableau JavaScript API
 Resource    resource/setup.resource   # keyword definitions for Test setup and teardown
 
-Suite Setup	     Test Launch
+Suite Setup	     Suite Launch
 Suite Teardown	 Close Browser
-Test Setup       Load Dashboards
-Test Teardown    Unload Dashboards
 

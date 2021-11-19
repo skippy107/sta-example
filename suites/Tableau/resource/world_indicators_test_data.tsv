@@ -1,0 +1,6 @@
+sheet	parameter	parameterValue	filterColumn	filterValue	filter2Column	filter2Value	markColumn	markValues	markName
+GDP per capita			Region	Europe	YEAR(Date (year))	2008	Country / Region	["Luxembourg","Italy"]	AVG(F: GDP per capita (curr $))
+			Region	Europe	YEAR(Date (year))	2008	Country / Region	["Luxembourg","Italy"]	AVG(F: GDP per capita (curr $))
+			Region	Europe	YEAR(Date (year))	2004	Country / Region	["Spain","Germany"]	AVG(F: GDP per capita (curr $))
+			Region	Oceania	YEAR(Date (year))	2005	Country / Region	["New Zealand","Fiji"]	AVG(F: GDP per capita (curr $))
+			Region	The Americas	YEAR(Date (year))	2002	Country / Region	["Bermuda","United States"]	AVG(F: GDP per capita (curr $))

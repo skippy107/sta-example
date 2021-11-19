@@ -8,6 +8,11 @@ Documentation	World Indicators Dashboard Test Example
 Resource	resource/tableau.robot    # this library maps keywords to the Tableau JavaScript API
 Resource	resource/setup.resource       # this library contains the keyword definitions for Test setup and teardowns
 
+Suite Setup        Load Dashboards
+Suite Teardown     UnLoad Dashboards
+
+Test Setup         Revert Dashboards
+
 *** Variables ***				
 # gdp test values
 ${SRC_URL}	https://public.tableau.com/views/WorldIndicators/GDPpercapita
@@ -43,10 +48,11 @@ GDP Test
 
 	${trg_check} =	Sum Target Marks	${WORLD_MARK_NAME}
 
-	Should Be Equal As Numbers	${src_check}	${trg_check}
+    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_check}    ${trg_check}
 
 *** Test Cases ***
 GDP Indicator Test
+    [Tags]    gdp     keyword-driven
     [Documentation]  This test case calls the GDP Test
-	GDP Test
+	Run Keyword and Continue on Failure    GDP Test
 

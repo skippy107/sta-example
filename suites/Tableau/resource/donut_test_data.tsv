@@ -1,0 +1,6 @@
+sheet	parameter	parameterValue	filterColumn	filterValue	filter2Column	filter2Value	markColumn	markValues	markName
+Measure Per Donut	Primary Nutrient	Energy					Donut	["Original Glazed","Apple Pie"]	SUM(Energy, Fat, Protein, Fibre or Carbs)
+	Primary Nutrient	Fibre					Donut	["Festive Truffle","Caramel Crunch"]	SUM(Energy, Fat, Protein, Fibre or Carbs)
+	Primary Nutrient	Carbs (& Sugars)					Donut	["Cookie Crunch","Mince Pie"]	SUM(Energy, Fat, Protein, Fibre or Carbs)
+	Primary Nutrient	Fat (& Saturated Fat)					Donut	["Chocolate Custard","Strawberry Gloss"]	SUM(Energy, Fat, Protein, Fibre or Carbs)
+	Primary Nutrient	Protein					Donut	["Caramel Iced Ring","Chocolate Dreamcake"]	SUM(Energy, Fat, Protein, Fibre or Carbs)

@@ -1,0 +1,5 @@
+sheet	parameter	parameterValue	filterColumn	filterValue	filter2Column	filter2Value	markColumn	markValues	markName
+iPhone Bar	Datatype	Cost ($)	Component	Camera			Device	["Galaxy S 4","Galaxy S 5"]	ATTR(DisplayValue)
+			Component	["Core Electronics","Memory"]			Device	["iPhone 3G","iPhone 3GS"]	ATTR(DisplayValue)
+			Component	["Power","Sensors"]			Device	["iPhone 5S","iPhone 6"]	ATTR(DisplayValue)
+			Component	Connectivity			Device	["iPhone 5S","iPhone 6"]	ATTR(DisplayValue)

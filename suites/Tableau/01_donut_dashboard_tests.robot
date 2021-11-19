@@ -8,6 +8,11 @@ Documentation	Donut Dashboard Test Example
 Resource	resource/tableau.robot        # this library maps keywords to the Tableau JavaScript API
 Resource	resource/setup.resource       # this library contains the keyword definitions for Test setup and teardowns
 
+Suite Setup        Load Dashboards
+Suite Teardown     UnLoad Dashboards
+
+Test Setup         Revert Dashboards
+
 *** Variables ***				
 # donut test values
 ${SRC_URL}    https://public.tableau.com/views/DonutDashboard/DonutDashboard
@@ -39,9 +44,9 @@ Calorie Amounts Test
 
 	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
 
-	Should Be Equal As Numbers	${src_result}    ${trg_result}
+    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_result}    ${trg_result}
 
-Fibre Amounts Test
+Fiber Amounts Test
     [Documentation]    This test will verify fibre counts
 
     Set Source Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE2}
@@ -77,24 +82,23 @@ Protein Amounts Test
 
 	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
 
-	Should Be Equal As Numbers	${src_result}    ${trg_result}
+    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_result}    ${trg_result}
 
 *** Test Cases ***
-Fibre Test
-    [Documentation]  This test case calls the Fibre Amounts Test
-    [Teardown]    Revert Dashboards
-	Fibre Amounts Test
+Fiber Test
+    [Tags]    donut     keyword-driven    fiber
+    [Documentation]  This test case calls the Fiber Amounts Test
+	Run Keyword and Continue on Failure    Fiber Amounts Test
 
 Calorie Test
+    [Tags]    donut     keyword-driven    calorie    dev
     [Documentation]  This test case calls the Calorie Amounts Test
-    [Setup]    ${NONE}
-    [Teardown]    Revert Dashboards
-	Calorie Amounts Test
+	Run Keyword and Continue on Failure    Calorie Amounts Test
 
 Protein Test
+    [Tags]    donut     keyword-driven    protein
     [Documentation]  This test case calls the Protein Amounts Test
-    [Setup]    ${NONE}
-	Protein Amounts Test
+	Run Keyword and Continue on Failure    Protein Amounts Test
 
 	 
 

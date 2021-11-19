@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation	World Indicators Dashboard Test Example
+Documentation	Smartphone Dashboard Test Example
 ...
 ...             This test shows how to compare a source and target version of a dashboard
 ...             after setting different filters and parameters
@@ -7,6 +7,11 @@ Documentation	World Indicators Dashboard Test Example
 
 Resource	resource/tableau.robot    # this library maps keywords to the Tableau JavaScript API
 Resource	resource/setup.resource       # this library contains the keyword definitions for Test setup and teardowns
+
+Suite Setup        Load Dashboards
+Suite Teardown     UnLoad Dashboards
+
+Test Setup         Revert Dashboards
 
 *** Variables ***				
 # smartphone test values
@@ -41,9 +46,11 @@ Costs Test
 
 	${trg_check} =	Sum Target Marks	${SMART_MARK_NAME}
 
-	Should Be Equal As Numbers	${src_check}	${trg_check}
+	Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_check}    ${trg_check}
+
 
 *** Test Cases ***
 Smartphone Costs Test
+    [Tags]    smartphone     keyword-driven
     [Documentation]  This test case calls the Costs Test
-	Costs Test
+	Run Keyword and Continue on Failure    Costs Test
