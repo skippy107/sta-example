@@ -47,7 +47,12 @@ Dashboard Test
 
 	${trg_result} =	Sum Target Marks	${markName}
 
-    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_result}    ${trg_result}
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
 
 *** Test Cases ***
 Run Dashboard Tests

@@ -8,49 +8,120 @@ Documentation	Smartphone Dashboard Test Example
 Resource	resource/tableau.robot    # this library maps keywords to the Tableau JavaScript API
 Resource	resource/setup.resource       # this library contains the keyword definitions for Test setup and teardowns
 
-Suite Setup        Load Dashboards
-Suite Teardown     UnLoad Dashboards
+Test Setup        Load Dashboards
+Test Teardown        Unload Dashboards
 
-Test Setup         Revert Dashboards
 
 *** Variables ***				
 # smartphone test values
 ${SRC_URL}	https://public.tableau.com/views/SmartphoneCostBreakdown/Overview
 ${TRG_URL}	https://public.tableau.com/views/SmartphoneCostBreakdown/Overview
-${SMART_SHEET}	 iPhone Bar
-${SMART_PRIMARY}   Datatype
-${SMART_PRIMARY_VALUE}   Cost ($)
-${SMART_FILTER_COLUMN}    Component
-${SMART_FILTER_VALUES}    Camera
-${SMART_MARK_COLUMN}    Device
-${SMART_MARK_VALUES}    ["Galaxy S 4","Galaxy S 5"]   
-${SMART_MARK_NAME}    ATTR(DisplayValue)
+${SHEET}	 iPhone Bar
+
+${DATATYPE}   Datatype
+${COST}   Cost ($)
+${COMPONENT}    Component
+${DEVICE}    Device
+
+${CAMERA}    Camera
+${DEVICE_LIST_1}    ["Galaxy S 4","Galaxy S 5"]   
+
+${ELECTRONICS}    ["Core Electronics","Memory"]
+${DEVICE_LIST_2}    ["iPhone 5S","iPhone 6"]   
+
+${SENSORS}    ["Power","Sensors"]
+${DEVICE_LIST_3}    ["iPhone 3G","iPhone 3GS"]   
+
+${TOTAL_COST}    ATTR(DisplayValue)
 
 *** Keywords ***			
-Costs Test
-    [Documentation]    This test will verify costs for a specific component and phone model
+Camera Costs
+    [Documentation]    This keyword will verify camera costs for specific phone models
 
-	Set Source Parameter ${SMART_PRIMARY} to ${SMART_PRIMARY_VALUE}  # there is only one parameter
-	Switch To Source Sheet    ${SMART_SHEET}
-	Set Source Filter    ${SMART_FILTER_COLUMN}    ${SMART_FILTER_VALUES}
-	Select Source Marks    ${SMART_MARK_COLUMN}    ${SMART_MARK_VALUES}
+	Set Source Parameter ${DATATYPE} to ${COST}
+	Switch To Source Sheet    ${SHEET}
+	Set Source Filter    ${COMPONENT}    ${CAMERA}
+	Select Source Marks    ${DEVICE}    ${DEVICE_LIST_1}
 
-	Set Target Parameter ${SMART_PRIMARY} to ${SMART_PRIMARY_VALUE}  # there is only one parameter
-	Switch To Target Sheet    ${SMART_SHEET}
-	Set Target Filter    ${SMART_FILTER_COLUMN}    ${SMART_FILTER_VALUES}
-	Select Target Marks    ${SMART_MARK_COLUMN}    ${SMART_MARK_VALUES}
+	Set Target Parameter ${DATATYPE} to ${COST}
+	Switch To Target Sheet    ${SHEET}
+	Set Target Filter    ${COMPONENT}    ${CAMERA}
+	Select Target Marks    ${DEVICE}    ${DEVICE_LIST_1}
 
 	Capture Page Screenshot
 
-	${src_check} =	Sum Source Marks	${SMART_MARK_NAME}
+	${src_result} =	Sum Source Marks	${TOTAL_COST}
 
-	${trg_check} =	Sum Target Marks	${SMART_MARK_NAME}
+	${trg_result} =	Sum Target Marks	${TOTAL_COST}
 
-	Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_check}    ${trg_check}
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
+
+Electronics Costs
+    [Documentation]    This keyword will verify electronics for specific phone models
+
+	Set Source Parameter ${DATATYPE} to ${COST}
+	Switch To Source Sheet    ${SHEET}
+	Set Source Filter    ${COMPONENT}    ${ELECTRONICS}
+	Select Source Marks    ${DEVICE}    ${DEVICE_LIST_2}
+
+	Set Target Parameter ${DATATYPE} to ${COST}
+	Switch To Target Sheet    ${SHEET}
+	Set Target Filter    ${COMPONENT}    ${ELECTRONICS}
+	Select Target Marks    ${DEVICE}    ${DEVICE_LIST_2}
+
+	Capture Page Screenshot
+
+	${src_result} =	Sum Source Marks	${TOTAL_COST}
+
+	${trg_result} =	Sum Target Marks	${TOTAL_COST}
+
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
+Sensor Costs
+    [Documentation]    This keyword will verify sensor costs for specific phone models
+
+	Set Source Parameter ${DATATYPE} to ${COST}
+	Switch To Source Sheet    ${SHEET}
+	Set Source Filter    ${COMPONENT}    ${SENSORS}
+	Select Source Marks    ${DEVICE}    ${DEVICE_LIST_3}
+
+	Set Target Parameter ${DATATYPE} to ${COST}
+	Switch To Target Sheet    ${SHEET}
+	Set Target Filter    ${COMPONENT}    ${SENSORS}
+	Select Target Marks    ${DEVICE}    ${DEVICE_LIST_3}
+
+	Capture Page Screenshot
+
+	${src_result} =	Sum Source Marks	${TOTAL_COST}
+
+	${trg_result} =	Sum Target Marks	${TOTAL_COST}
+
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
 
 
 *** Test Cases ***
-Smartphone Costs Test
-    [Tags]    smartphone     keyword-driven
-    [Documentation]  This test case calls the Costs Test
-	Run Keyword and Continue on Failure    Costs Test
+Camera Test
+    [Tags]    smartphone     keyword-driven     camera
+    [Documentation]  This test case calls the Camera Costs keyword
+	Run Keyword and Continue on Failure    Camera Costs
+Electronics Test
+    [Tags]    smartphone     keyword-driven     electronics
+    [Documentation]  This test case calls the Electronics Costs keyword
+	Run Keyword and Continue on Failure    Electronics Costs
+Sensor Test
+    [Tags]    smartphone     keyword-driven     sensor
+    [Documentation]  This test case calls the Sensor Costs keyword
+	Run Keyword and Continue on Failure    Sensor Costs

@@ -19,25 +19,30 @@ ${FILE_PREFIX}    tests/tableau/
 
 *** Keywords ***
 Suite Launch				
+    [Documentation]     Opens the browser and sets Selenium timeouts for all tests
 	Set Selenium Timeout	10	
 	Set Selenium Implicit Wait	10
-	Open Browser	about:blank	 ${BROWSER}
+	Open Browser	${TEST_FIXTURE_URL}    ${BROWSER}
 	Maximize Browser Window
 
 Unload Dashboards
+    [Documentation]     Unloads all dashboards
 	Unload Source Dashboard
 	Unload Target Dashboard
 
 Load Dashboards
+    [Documentation]     Navigates to the test fixture and loads all dashboards
     Go To    ${TEST_FIXTURE_URL}
 	Load Source Dashboard    ${SRC_VIZ_ID}    ${SRC_URL}
 	Load Target Dashboard    ${TRG_VIZ_ID}    ${TRG_URL}
 
 Revert Dashboards
+    [Documentation]     Reverts all dashboards to default view
     Source Revert All
 	Target Revert All
 
 Read Test Data
+    [Documentation]     Reads test data from [${filename}] and returns a list with the file contents
     [Arguments]    ${filename}
     ${contents}=   Get File    ${FILE_PREFIX}${filename}
     @{data}=      Split to lines    ${contents}
@@ -46,6 +51,7 @@ Read Test Data
 	[Return]    @{data}
 
 Read Test Settings
+    [Documentation]     Reads test settings from [${filename}] and returns the settings in separate variables
     [Arguments]    ${filename}
     ${contents}=   Get File    ${FILE_PREFIX}${filename}
     @{data}=      Split to lines    ${contents}

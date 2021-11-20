@@ -8,87 +8,105 @@ Documentation	Donut Dashboard Test Example
 Resource	resource/tableau.robot        # this library maps keywords to the Tableau JavaScript API
 Resource	resource/setup.resource       # this library contains the keyword definitions for Test setup and teardowns
 
-Suite Setup        Load Dashboards
-Suite Teardown     UnLoad Dashboards
-
-Test Setup         Revert Dashboards
+Test Setup        Load Dashboards
+Test Teardown        Unload Dashboards
 
 *** Variables ***				
 # donut test values
 ${SRC_URL}    https://public.tableau.com/views/DonutDashboard/DonutDashboard
 ${TRG_URL}    https://public.tableau.com/views/DonutDashboard/DonutDashboard
-${DONUT_SHEET}   Measure Per Donut
-${DONUT_PRIMARY}   Primary Nutrient
-${DONUT_PRIMARY_VALUE}   Energy
-${DONUT_PRIMARY_VALUE2}   Fibre
-${DONUT_PRIMARY_VALUE3}   Protein
-${DONUT_MARK_COLUMN}    Donut
-${DONUT_MARK_VALUES}    ["Original Glazed","Apple Pie"]   
-${DONUT_MARK_NAME}    SUM(Energy, Fat, Protein, Fibre or Carbs)
+${SHEET}   Measure Per Donut
+
+${PRIMARY_NUTRIENT}   Primary Nutrient
+${ENERGY}   Energy
+${CARBS}   Carbs (& Sugars)
+${PROTEIN}   Protein
+${DONUT}    Donut
+
+${DONUT_LIST_1}    ["Original Glazed","Apple Pie"]   
+${DONUT_LIST_2}    ["Festive Truffle","Caramel Crunch"]   
+${DONUT_LIST_3}    ["Chocolate Custard","Strawberry Gloss"]   
+
+${NUTRITION}    SUM(Energy, Fat, Protein, Fibre or Carbs)
 
 *** Keywords ***			
 Calorie Amounts Test
     [Documentation]    This test will verify calorie counts
 
-    Set Source Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE}
-	Switch To Source Sheet    ${DONUT_SHEET}
-	Select Source Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
+    Set Source Parameter ${PRIMARY_NUTRIENT} to ${ENERGY}
+	Switch To Source Sheet    ${SHEET}
+	Select Source Marks       ${DONUT}    ${DONUT_LIST_1}
 
-    Set Target Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE}
-	Switch To Target Sheet    ${DONUT_SHEET}
-	Select Target Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
-
-	Capture Page Screenshot
-
-	${src_result} =	Sum Source Marks	${DONUT_MARK_NAME}
-
-	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
-
-    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_result}    ${trg_result}
-
-Fiber Amounts Test
-    [Documentation]    This test will verify fibre counts
-
-    Set Source Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE2}
-	Switch To Source Sheet    ${DONUT_SHEET}
-	Select Source Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
-
-    Set Target Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE2}
-	Switch To Target Sheet    ${DONUT_SHEET}
-	Select Target Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
+    Set Target Parameter ${PRIMARY_NUTRIENT} to ${ENERGY}
+	Switch To Target Sheet    ${SHEET}
+	Select Target Marks       ${DONUT}    ${DONUT_LIST_1}
 
 	Capture Page Screenshot
 
-	${src_result} =	Sum Source Marks	${DONUT_MARK_NAME}
+	${src_result} =	Sum Source Marks	${NUTRITION}
 
-	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
+	${trg_result} =	Sum Target Marks	${NUTRITION}
 
-	Should Be Equal As Numbers	${src_result}    ${trg_result}
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
+
+Carbohydrate Amounts Test
+    [Documentation]    This test will verify carbohydrate counts
+
+    Set Source Parameter ${PRIMARY_NUTRIENT} to ${CARBS}
+	Switch To Source Sheet    ${SHEET}
+	Select Source Marks       ${DONUT}    ${DONUT_LIST_2}
+
+    Set Target Parameter ${PRIMARY_NUTRIENT} to ${CARBS}
+	Switch To Target Sheet    ${SHEET}
+	Select Target Marks       ${DONUT}    ${DONUT_LIST_2}
+
+	Capture Page Screenshot
+
+	${src_result} =	Sum Source Marks	${NUTRITION}
+
+	${trg_result} =	Sum Target Marks	${NUTRITION}
+
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
 
 Protein Amounts Test
     [Documentation]    This test will verify protein counts
 
-    Set Source Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE3}
-	Switch To Source Sheet    ${DONUT_SHEET}
-	Select Source Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
+    Set Source Parameter ${PRIMARY_NUTRIENT} to ${PROTEIN}
+	Switch To Source Sheet    ${SHEET}
+	Select Source Marks       ${DONUT}    ${DONUT_LIST_3}
 
-    Set Target Parameter ${DONUT_PRIMARY} to ${DONUT_PRIMARY_VALUE3}
-	Switch To Target Sheet    ${DONUT_SHEET}
-	Select Target Marks       ${DONUT_MARK_COLUMN}    ${DONUT_MARK_VALUES}
+    Set Target Parameter ${PRIMARY_NUTRIENT} to ${PROTEIN}
+	Switch To Target Sheet    ${SHEET}
+	Select Target Marks       ${DONUT}    ${DONUT_LIST_3}
 
 	Capture Page Screenshot
 
-	${src_result} =	Sum Source Marks	${DONUT_MARK_NAME}
+	${src_result} =	Sum Source Marks	${NUTRITION}
 
-	${trg_result} =	Sum Target Marks	${DONUT_MARK_NAME}
+	${trg_result} =	Sum Target Marks	${NUTRITION}
 
-    Run Keyword and Continue on Failure    Should Be Equal As Numbers	${src_result}    ${trg_result}
+    Run Keyword If    ${src_result} == 0 or ${trg_result} == 0
+	    ...           Fail    No data available in one or both dashboards 
+
+    Run Keyword If    ${src_result} != ${trg_result} and ${src_result} != 0 and ${trg_result} != 0  
+	    ...           Fail    Data mismatch between source and target
+
 
 *** Test Cases ***
-Fiber Test
-    [Tags]    donut     keyword-driven    fiber
-    [Documentation]  This test case calls the Fiber Amounts Test
-	Run Keyword and Continue on Failure    Fiber Amounts Test
+Carbohydrate Test
+    [Tags]    donut     keyword-driven    carbs
+    [Documentation]  This test case calls the Carbohydrate Amounts Test
+	Run Keyword and Continue on Failure    Carbohydrate Amounts Test
 
 Calorie Test
     [Tags]    donut     keyword-driven    calorie    dev
