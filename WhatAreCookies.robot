@@ -1,9 +1,9 @@
 *** Settings ***
-Library           Selenium2Library
+Library           SeleniumLibrary
 
 *** Test Cases ***
 Cookies
     Open Browser    http://www.whatarecookies.com/cookietest.asp    firefox    mainbrowser
     ${all_cookies}=    Get Cookies
-    ${test}=    Get Cookie Value    __atuvc
+    ${test}=    Get Cookie    __atuvc
     Close Browser 

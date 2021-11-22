@@ -3,12 +3,12 @@
 # The settings file defines suite level variables which
 # can be used by any tests in the file
 #
-Resource    settings/FreeDelivery.Settings.robot
+Resource    settings/FreeDelivery.Settings.resource
 
 # The import file maps the Given/When/Then keywords to
 # object resources
 #
-Resource          imports/FreeDelivery.robot
+Resource          imports/FreeDelivery.resource
 
 
 Suite Setup     FreeDelivery.SuiteSetup
