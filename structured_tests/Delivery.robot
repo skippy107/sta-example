@@ -1,28 +1,18 @@
 *** Settings ***
-#
-# The settings file defines suite level variables which
-# can be used by any tests in the file
-#
-Resource    settings/${SUITE NAME}.Settings.txt
 
-# The import file maps the Given/When/Then keywords to
-# object resources
-#
-Resource          imports/${SUITE NAME}.txt
+Resource    settings/Delivery.Settings.resource
+Resource    imports/Delivery.resource
+
+Suite Setup    App.Open
+Suite Teardown    App.Close
+Test Setup    App.Init
 
 
-Suite Setup    ${SUITE NAME}.SuiteSetup
-Suite Teardown    ${SUITE NAME}.SuiteTeardown
-
-Test Setup    ${SUITE NAME}.TestSetup
-Test Teardown    ${SUITE NAME}.TestTeardown
-
-
-Documentation    *Eligibility Tests*
+Documentation    *Free Delivery*
 ...    
-...     This test suite consists of different eligibility tests related to ${SUITE NAME}
+...     This test suite consists of all tests related to Free Delivery
 ...    
-...     For this example we have a single keyword to test the business rule below
+...     For this example we have a single test case to test the business rule below
 ...     but you can add more as needed.  Use the tagging feature of Robot Framework
 ...     to group tests together by sub-function.
 ...    
@@ -65,7 +55,7 @@ FreeDeliveryEligibility
 # Note how the custom keyword uses a behavior driven style and the
 # test case uses a data driven style
 
-| *Test Case*         | *Keyword to Run*        | *Cust Type*| *Number of Books* | *Free Delivery?* |
+| *Test Case*         | *Keyword to Run*        | *Cust Type* | *Number of Books* | *Free Delivery?* |
 | VIP Above Threshold | FreeDeliveryEligibility |  VIP       | ${AboveThreshold} | ${TRUE} |
 | VIP At Threshold    | FreeDeliveryEligibility |  VIP       | ${Threshold}      | ${TRUE} |
 | VIP Below Threshold | FreeDeliveryEligibility |  VIP       | ${BelowThreshold} | ${FALSE} |

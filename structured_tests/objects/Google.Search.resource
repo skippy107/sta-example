@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Defines all required resources and keywords
 ...               handling the google search.
-Resource          ../adapters/SeleniumLibrary.txt
+Resource          ../adapters/SeleniumLibrary.resource
 
 *** Variables ***
 ${Google.Search.Locator.SearchField}    id=lst-ib

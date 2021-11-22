@@ -1,6 +1,6 @@
 *** Settings ***
 
-Resource          ../adapters/Selenium2Library.txt
+Resource    ../adapters/SeleniumLibrary.resource
 
 Documentation     Defines all resources and keywords 
 ...               handling web based application object
@@ -32,7 +32,7 @@ Init
 GoTo
     ${currentloc}=    Get Location
     Run Keyword If    '${currentloc}'!='${App.Url}'
-    ...    Selenium2Library.Go To    ${App.Url}
+    ...    SeleniumLibrary.Go To    ${App.Url}
     Title Should Be    ${App.PageTitle}
     Log    Application opened successfully.
 

@@ -1,7 +1,7 @@
 *** Settings ***
 
-Resource    ../objects/Retention.App.txt
-Resource    ../objects/Retention.Lead.txt
+Resource    ../objects/Retention.App.resource
+Resource    ../objects/Retention.Lead.resource
 
 Documentation    Import file for Retention Prospect Tests 
 ...

@@ -1,4 +1,4 @@
 *** Settings ***
 Documentation     Defines all required resources and keywords
 ...               handling the google top navigation.
-Resource          ../adapters/SeleniumLibrary.txt
+Resource          ../adapters/SeleniumLibrary.resource

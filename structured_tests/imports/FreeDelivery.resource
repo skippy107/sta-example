@@ -11,8 +11,8 @@
 # and maintained in the future
 #
 
-Resource    ../objects/App.txt
-Resource    ../objects/Cart.txt
+Resource    ../objects/App.resource
+Resource    ../objects/Cart.resource
 
 Documentation    Import file for ${SUITE NAME} Tests 
 ...

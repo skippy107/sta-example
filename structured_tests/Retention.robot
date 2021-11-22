@@ -1,7 +1,7 @@
 *** Settings ***
 
-Resource    ../../settings/retention-settings.txt
-Resource    ../../imports/Retention.txt
+Resource    settings/retention-settings.resource
+Resource    imports/Retention.resource
 
 Suite Setup    App.Open
 Suite Teardown    App.Close

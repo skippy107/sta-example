@@ -1,7 +1,7 @@
 *** Settings ***
 
-Resource    ../objects/Delivery.App.txt
-Resource    ../objects/Delivery.Cart.txt
+Resource    ../objects/Delivery.App.resource
+Resource    ../objects/Delivery.Cart.resource
 
 Documentation    Import file for Delivery Tests 
 ...

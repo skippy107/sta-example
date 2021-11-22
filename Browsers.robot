@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Teardown    Close All Browsers
-Library           Selenium2Library
+Library           SeleniumLibrary
 
 *** Variables ***
 ${URL Application}    http://www.w3schools.com
@@ -12,7 +12,7 @@ Select
     Wait Until Page Contains Element    iframeResult
     Select Frame    iframeResult
     Wait Until Page Contains Element    xpath=//select
-    Select From List    xpath=//select    Opel
+    Select From List By Value    xpath=//select    Opel
     ${label}    Get Selected List Label    xpath=//select
     Should Be Equal    ${label}    Opel
     List Selection Should Be    xpath=//select    Opel

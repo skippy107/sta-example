@@ -1,6 +1,6 @@
 | *** Setting *** | Value |
 | Documentation  | Page Object as Resource File Example for Robot Framework |
-| Library        | Selenium2Library |
+| Library        | SeleniumLibrary |
 
 | *** Variable *** | Value |
 | ${SEARCH_FIELD} | name=q |
@@ -9,22 +9,22 @@
 | *** Keyword *** |
 | Click On Search |
 |    | [Documentation] | Click the search button to proceed with the search |
-|    | Selenium2Library.Click Button | ${SEARCH_BUTTON} |
+|    | SeleniumLibrary.Click Button | ${SEARCH_BUTTON} |
 
 | Close |
 |    | [Documentation] | Close the browser window |
-|    | Selenium2Library.Close Browser | # or is it Selenium2Library.Close Window? |
+|    | SeleniumLibrary.Close Browser | # or is it Selenium2Library.Close Window? |
 
 | Get Title |
 |    | [Documentation] | Get the page title for Google search page |
-|    | ${result} = | Selenium2Library.Get Title |
+|    | ${result} = | SeleniumLibrary.Get Title |
 |    | [Return] | ${result} |
 
 | Open |
 |    | [Arguments] | ${url} |
 |    | [Documentation] | Open (or go to) the Google search page |
-|    | Run Keyword And Return If | ${BROWSER_OPENED} == ${true} | Selenium2Library.Go To | ${url} |
-|    | Selenium2Library.Open Browser | ${url} | ${BROWSER} | #other optional args |
+|    | Run Keyword And Return If | ${BROWSER_OPENED} == ${true} | SeleniumLibrary.Go To | ${url} |
+|    | SeleniumLibrary.Open Browser | ${url} | ${BROWSER} | #other optional args |
 |    | ${BROWSER_OPENED} = | Set Variable | ${true} |
 
 | Search For |
@@ -38,4 +38,4 @@
 | Type Search Term |
 |    | [Arguments] | ${searchTerm} |
 |    | [Documentation] | Enter search term into Google search field. This doesn't click the search button as a follow up. |
-|    | Selenium2Library.Input Text | ${SEARCH_FIELD} | ${searchTerm} |
+|    | SeleniumLibrary.Input Text | ${SEARCH_FIELD} | ${searchTerm} |

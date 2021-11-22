@@ -5,7 +5,7 @@ Documentation     Example test cases using a triangle calculator web page
 ...               failures look like.
 Suite Setup       Test Launch
 Suite Teardown    Close Browser
-Library           Selenium2Library
+Library           SeleniumLibrary
 
 *** Variables ***
 

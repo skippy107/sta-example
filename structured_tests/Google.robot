@@ -2,10 +2,10 @@
 Suite Setup       Google.Site.Open
 Suite Teardown    Google.Site.Close
 Test Setup        Google.Site.Init
-Resource          ../../settings/Settings.txt
-Resource          ../../imports/Google.txt
+Resource          settings/Settings.resource
+Resource          imports/Google.resource
 
-*** Testcases ***
+*** Test Cases ***
 Open And Close Google Site
     Capture Page Screenshot
     
@@ -18,14 +18,14 @@ Search Robotframework Selenium2Library
     Google.Search.Search String    Robotframework Selenium2Library Java
     
 Search With JavaScript Locator
-    Selenium2Library.Add Location Strategy    elementById    byID Locator Strategy
+    SeleniumLibrary.Add Location Strategy    elementById    byID Locator Strategy
     Input Text    elementById=lst-ib    Robotframework Selenium2Library Java
     Press Key    elementById=lst-ib    \\13
     Wait Until Element Is Visible    xpath=//a[contains(.,'MarkusBernhardt')]
     Capture Page Screenshot
    
 Search With JavaScript Locator Text
-    Selenium2Library.Add Location Strategy    custom    ByValue Locator Strategy
+    SeleniumLibrary.Add Location Strategy    custom    ByValue Locator Strategy
     Wait Until Element Is Visible    custom=Google-Suche
 
 Search Without Locator Type
